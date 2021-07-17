@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>Covid 19 Info</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="display-4">Covid 19 Live data</h1>
+            <br><br>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Total Cases</th>
+                        <th>Total Casualties</th>
+                        <th>Total Recoveries</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr id="data">
+
+                    </tr>
+                </tbody>
+            </table>
+            <button onclick="refreshData()" class="btn btn-danger btn-block btn-lg">
+                Refresh Data
+            </button>
+        </div>
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        init()
+
+        function init(){
+            var url = "https://api.covid19api.com/summary"
+
+            var data = ''
+
+            $.get(url, function(data){
+                console.log(data)
+                data = `
+        
+                <td>${data.Global.TotalConfirmed}</td>
+                <td>${data.Global.TotalDeaths}</td>
+                <td>${data.Global.TotalRecovered}</td>
+
+                `
+                $("#data").html(data)
+            })
+        } 
+        function refreshData(){
+                clearData()
+                init()
+        }
+        function clearData(){
+            $("#data").empty()
+        }
+    </script>
+</html>
